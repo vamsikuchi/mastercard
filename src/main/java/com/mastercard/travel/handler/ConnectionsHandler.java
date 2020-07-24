@@ -11,9 +11,9 @@ import java.util.function.BiFunction;
 
 @Service
 public class ConnectionsHandler {
-    Map<String, Set<String>> connections = null;
+    private Map<String, Set<String>> connections = null;
     public static final BiFunction<Set<String>, Set<String>, Set<String>> mergeConnections = (exsistingConnections, newConncetion) -> {
-        Set<String> allConnections = new HashSet<String>(exsistingConnections);
+        Set<String> allConnections = new HashSet<>(exsistingConnections);
         allConnections.addAll(newConncetion);
         return allConnections;
     };
@@ -23,7 +23,6 @@ public class ConnectionsHandler {
     }
 
     public boolean searchConnection(String firstCity, String secondCity){
-
         return connections.get(firstCity).contains(secondCity);
     }
 
@@ -37,11 +36,11 @@ public class ConnectionsHandler {
      *
      * This method will return unmodifiable map, so its thread safe to search.
      *
-     * @param classPathResource
-     * @return
+     * @param classPathResource ClassPath resource for the given filePath
+     * @return Map of City, Connected Cities.
      */
     private Map<String, Set<String>> loadConnections(ClassPathResource classPathResource){
-        Map<String,Set<String>> connectionMap = new HashMap<String, Set<String>>();
+        Map<String,Set<String>> connectionMap = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(classPathResource.getInputStream()))){
             String eachLine = reader.readLine();
             if (eachLine != null) {
