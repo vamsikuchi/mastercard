@@ -98,6 +98,16 @@ class TravelApplicationTests {
 				andDo(print()).andExpect(status().isOk()).andExpect(content().string(containsString("yes")));
 	}
 
+	/**
+	 *  test with cities connection
+	 *  chceks status code and response value
+	 */
+	@Test
+	public void testWithExtraCitiesConnection() throws Exception {
+		ResultActions perform = mockMvc.perform(get("/connected?origin=Boston&destination=Albany&destination1=Braintree")).
+				andDo(print()).andExpect(status().isOk()).andExpect(content().string(containsString("yes")));
+	}
+
 
 
 

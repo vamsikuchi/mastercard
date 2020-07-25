@@ -67,7 +67,7 @@ public class ConnectionsHandler {
      *  Takes two params as inputs and retuen two cities connection status as True/False
      *  If one of the param is not available , return false
      *  If both cities are same, return true
-     *  Method input params are not case sesitive.
+     *  Method input params are not case sensitive.
      * @param firstCity
      * @param secondCity
      * @return Boolean, if both citis connect True else False
@@ -89,13 +89,14 @@ public class ConnectionsHandler {
 
 
     /***
-     * Read each lline from the resource and prepare 2 way Map .
      * Each line is split , changed to lower case and trimmed.
-     * 2 way map will allow the search easy and faster
-     * 2 way map is duplication of data, heavy on memory.
-     * This method will return unmodifiable map.
-     * Alternative : In order to avoid duplicates each route should be made as String and add all those String into Set.
-     * If both citites are found in a single String(route)
+     *  This method will return unmodifiable List<Set<String>>
+     *  Each element of List contains list of cities in a route , so this method will
+     *  calculate the list of all connected cities as one List, we can call this as connected cities route
+
+     *  If both cities are not in the list of routes, we create a new route
+     *  If one of the city exists on our routes , then search the route and append the new city to existing routes.
+     *  If a city is found in multiple routes, both routes are connected, so merge the routes as one route
      *
      * @param classPathResource ClassPath resource for the given filePath
      * @return Map of City, Connected Cities.
@@ -112,9 +113,7 @@ public class ConnectionsHandler {
                     routes = createOrMergeRoutes(cities[0].trim(),cities[1].trim(),exsistingCities,routes);
                 }
             }
-
             List<Set<String>> connectionRoutes = new ArrayList<>();
-
             routes.forEach(eachRoute ->{
                 connectionRoutes.add(
                         Arrays.asList(eachRoute.split(","))
@@ -143,7 +142,7 @@ public class ConnectionsHandler {
      * @return
      */
 
-    public List<String> createOrMergeRoutes(String city1, String city2, List<String> exsistingCities, List<String> routes){
+    private List<String> createOrMergeRoutes(String city1, String city2, List<String> exsistingCities, List<String> routes){
         if( (!exsistingCities.contains(city1)) && (!exsistingCities.contains(city2))){
             exsistingCities.add(city1);
             exsistingCities.add(city2);
