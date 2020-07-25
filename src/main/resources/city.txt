@@ -2,3 +2,8 @@ Boston, New York
 Philadelphia, Newark
 Newark, Boston
 Trenton, Albany
+Boston, Quincy
+Quincy, Albany
+Braintree, New York
+Stanford, Medford
+
